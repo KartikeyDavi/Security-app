@@ -9,17 +9,18 @@ export interface deviceType {
 
 const userSchema = new Schema<deviceType>(
   {
-    name: {
-      type: String,
-      required: true,
-    },
     dId: {
       type: String,
       required: true,
     },
-
-    lastActivity: Date,
-    objDistance: String,
+    lastActivity: {
+      type:Date,
+      default:new Date(Date.now())
+    },
+    objDistance: {
+      type:String,
+      default:"0"
+    },
   },
   { timestamps: true }
 );

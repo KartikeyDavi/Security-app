@@ -1,11 +1,14 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
-
+type dType = {
+  name: string;
+  id: string;
+};
 export interface userType {
   name: string;
   email: string;
   password: string;
-  devices?: string[] | [];
+  devices?: dType[] | [];
 }
 
 const strType = {
@@ -13,15 +16,19 @@ const strType = {
   required: true,
 };
 
-const userSchema = new Schema<userType>({
-  name: strType,
-  email: strType,
-  password: strType,
-  devices: {
-    type: [String],
-    default: [],
+const userSchema = new Schema<userType>(
+  {
+    name: strType,
+    email: strType,
+    password: strType,
+    devices: {
+      name: strType,
+      id: strType,
+      default: [],
+    },
   },
-}, {timestamps:true});
+  { timestamps: true }
+);
 
 userSchema.pre("save", async function (next) {
   if (this.isModified("password"))
