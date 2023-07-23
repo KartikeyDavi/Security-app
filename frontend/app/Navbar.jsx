@@ -1,6 +1,8 @@
 import React from "react";
 import Link from "next/link";
+import { cookies } from "next/headers";
 const Navbar = () => {
+  const userId = cookies().get("uid")?.value;
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -20,7 +22,11 @@ const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <Link className="nav-link active" aria-current="page" href="/signup">
+            <Link
+              className="nav-link active"
+              aria-current="page"
+              href="/signup"
+            >
               Signup
             </Link>
             <Link className="nav-link" href="/signin">

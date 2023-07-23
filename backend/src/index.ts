@@ -21,8 +21,19 @@ const startServer = () => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cors());
-
-  app.use('/user',userRouter)
+  app.use((req, res, next) => {
+    const { url } = req;
+    console.log(
+      `Requesting Method:[${req.method}] -> ${url} from [${req.socket.remoteAddress}]`
+    );
+    res.on("finish", () => {
+      console.log(
+        `Responding Method:[${req.method}] -> ${url} from [${req.socket.remoteAddress}] status:[${res.statusCode}]`
+      );
+    });
+    next();
+  });
+  app.use("/user", userRouter);
 
   app.get("/", (req, res) => {
     res.send("Welcome to ATL DAY");

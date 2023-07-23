@@ -1,13 +1,15 @@
 "use client";
 import React from "react";
 import { useState } from "react";
+import axios from "axios";
 const page = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const register = (e) => {
+  const register = async (e) => {
     e.preventDefault();
-    console.log(name, email, password);
+    const { data } = await axios.post("/api/signup", { name, email, password });
+    console.log(data);
   };
   return (
     <div className="container">
@@ -18,6 +20,7 @@ const page = () => {
             Name
           </label>
           <input
+            value={name}
             onChange={(e) => setName(e.target.value)}
             type="text"
             className="form-control"
@@ -30,6 +33,7 @@ const page = () => {
             Email address
           </label>
           <input
+            value={email}
             onChange={(e) => {
               setEmail(e.target.value);
             }}
@@ -47,6 +51,7 @@ const page = () => {
             Password
           </label>
           <input
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             className="form-control"
