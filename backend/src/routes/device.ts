@@ -28,4 +28,21 @@ deviceRouter.post("/register", async (req, res) => {
   }
 });
 
+deviceRouter.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const device = await Device.findOne({ dId: id });
+    return res.status(200).json({
+      success: true,
+      device,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      success: false,
+      message: err,
+    });
+  }
+});
+
 export default deviceRouter;
