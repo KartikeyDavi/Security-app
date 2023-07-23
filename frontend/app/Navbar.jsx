@@ -1,5 +1,5 @@
 import React from "react";
-
+import Link from "next/link";
 const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -20,12 +20,12 @@ const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <a className="nav-link active" aria-current="page" href="#">
-              You
-            </a>
-            <a className="nav-link" href="#">
+            <Link className="nav-link active" aria-current="page" href="/signup">
+              Signup
+            </Link>
+            <Link className="nav-link" href="/signin">
               Devices
-            </a>
+            </Link>
             <a className="nav-link" href="#">
               About
             </a>
