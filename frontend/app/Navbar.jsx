@@ -1,8 +1,15 @@
 import React from "react";
 import Link from "next/link";
 import { cookies } from "next/headers";
-const Navbar = () => {
+import axios from "axios";
+const Navbar = async () => {
   const userId = cookies().get("uid")?.value;
+  const { data } = await axios.get("http://localhost:8000/user/me", {
+    headers: {
+      Authorization: `Bearer ${userId || ""}`,
+    },
+  });
+  const { loggedIn } = data;
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -27,10 +34,10 @@ const Navbar = () => {
               aria-current="page"
               href="/signup"
             >
-              Signup
+              {loggedIn ? "You" : "Signup"}
             </Link>
             <Link className="nav-link" href="/signin">
-              Devices
+              {loggedIn ? "Devices" : "SignIn"}
             </Link>
             <a className="nav-link" href="#">
               About

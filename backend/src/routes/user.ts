@@ -62,4 +62,19 @@ userRouter.post("/signin", async (req, res) => {
   }
 });
 
+userRouter.get('/me',async(req, res)=>{
+  const id = req.headers?.authorization?.split(" ")[1];
+  if(!id) return res.status(200).json({message:"not logged in"});
+  try{
+    const user = await USER.findOne({_id:id});
+    return res.status(200).json({
+      loggedIn:true,
+      user,
+    })
+  }catch(err){
+    console.log(err);
+    return res.status(500).json({err})
+  }
+})
+
 export default userRouter;
