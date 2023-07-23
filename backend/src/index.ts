@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import { connect } from "mongoose";
 import { config } from "dotenv";
+
+import userRouter from "./routes/user";
 config();
 
 const app = express();
@@ -19,6 +21,9 @@ const startServer = () => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cors());
+
+  app.use('/user',userRouter)
+
   app.get("/", (req, res) => {
     res.send("Welcome to ATL DAY");
   });

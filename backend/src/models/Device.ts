@@ -2,6 +2,7 @@ import { Schema, model } from "mongoose";
 
 export interface deviceType {
   name: string;
+  dId:string;
   lastActivity: Date;
   objDistance: string;
 }
@@ -12,6 +13,11 @@ const userSchema = new Schema<deviceType>(
       type: String,
       required: true,
     },
+    dId: {
+      type: String,
+      required: true,
+    },
+
     lastActivity: Date,
     objDistance: String,
   },
