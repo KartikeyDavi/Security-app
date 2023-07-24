@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { connect } from "mongoose";
 import { config } from "dotenv";
+import { Server, Socket } from "socket.io";
 
 import userRouter from "./routes/user";
 config();
@@ -38,7 +39,13 @@ const startServer = () => {
   app.get("/", (req, res) => {
     res.send("Welcome to ATL DAY");
   });
-  app.listen(8000, () => {
+  const server = app.listen(8000, () => {
     console.log(`Listening at port 8000`);
+  });
+  //socket code;
+  const io = new Server(server);
+  io.on("connection", (socket: Socket) => {
+    const { id } = socket.handshake.query;
+    console.log(`Client ${id} connected`);
   });
 };
