@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 const page = () => {
@@ -32,7 +32,7 @@ const page = () => {
         })
       }
     } catch (error) {
-      console.log(err)
+      console.log(error)
       Swal.fire({
         title:"Error!",
         text:"We are facing some issues, please try again later",

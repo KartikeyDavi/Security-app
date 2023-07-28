@@ -21,11 +21,7 @@ const userSchema = new Schema<userType>(
     name: strType,
     email: strType,
     password: strType,
-    devices: {
-      name: strType,
-      id: strType,
-      default: [],
-    },
+    devices: [{ name: String, id: String, default: [] }],
   },
   { timestamps: true }
 );
