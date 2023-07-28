@@ -8,6 +8,7 @@ userRouter.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
     return res.status(200).json({
+      success:false,
       message: "please enter all the fields",
     });
   }
@@ -17,6 +18,7 @@ userRouter.post("/signup", async (req, res) => {
     const userExists = await USER.findOne({ email });
     if (userExists)
       return res.status(200).json({
+        success:false,
         message: "Email already exists",
       });
     const result = await User.save();
@@ -41,12 +43,14 @@ userRouter.post("/signin", async (req, res) => {
     const user = await USER.findOne({ email });
     if (!user)
       return res.status(200).json({
+        success:false,
         message: "Invalid email or password",
       });
       const passwordsMatch = await bcrypt.compare(password, user.password);
       console.log(passwordsMatch);
     if (!passwordsMatch)
       return res.status(200).json({
+        success:false,
         message: "Invalid email or password",
       });
     return res.status(200).json({
@@ -64,7 +68,7 @@ userRouter.post("/signin", async (req, res) => {
 
 userRouter.get('/me',async(req, res)=>{
   const id = req.headers?.authorization?.split(" ")[1];
-  if(!id) return res.status(200).json({message:"not logged in"});
+  if(!id) return res.status(200).json({user:[],message:"not logged in"});
   try{
     const user = await USER.findOne({_id:id});
     return res.status(200).json({

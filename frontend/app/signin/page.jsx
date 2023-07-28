@@ -1,17 +1,47 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 const page = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  useEffect(()=>{
+    setEmail("");
+    setPassword("");
+  }, [])
   const login = async (e) => {
     e.preventDefault();
-    const { data } = await axios.post("/api/signin", {
-      email,
-      password,
-    });
-    console.log(data);
+    try{
+      const { data } = await axios.post("/api/signin", {
+        email,
+        password,
+      });
+      if(data.success){
+        Swal.fire({
+          title:"Logged in",
+          text:"You were logged in successfully",
+          icon:"success",
+          confirmButtonText:"Continue"
+        }).then(()=>window.location.href='/')
+      }else{
+        Swal.fire({
+          title:"Failure!",
+          text:data.message,
+          icon:"warning",
+          confirmButtonText:"Continue"
+        })
+      }
+    }catch(err){
+      console.log(err)
+      Swal.fire({
+        title:"Error!",
+        text:"We are facing some issues, please try again later",
+        icon:"error",
+        confirmButtonText:"Go back"
+      })
+    }
+
   };
   return (
     <div className="container">

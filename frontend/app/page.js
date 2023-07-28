@@ -10,16 +10,13 @@ export default async function Home() {
       Authorization: `Bearer ${userId || ""}`,
     },
   });
-  console.log(data);
   if (!data.user) {
     return <h1>An Error occured</h1>;
   }
   if (!userId) {
     return (
       <div className="container d-flex justify-content-center align-items-center">
-        <button className="btn btn-primary">
-          <Link href={"/signin"}>Login</Link>
-        </button>
+          <Link className="btn btn-primary mt-5" href={"/signin"}>Login</Link>
       </div>
     );
   }
